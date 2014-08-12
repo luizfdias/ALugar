@@ -4,16 +4,21 @@
 /// Este supertipo fica na camada de infraestrutura, pois não é algo efetivamente do domínio.
 /// </summary>
 
+using System;
+
 namespace TODOSoft.ALugar.Infrastructure.DomainBase
 {
     public abstract class EntityBase
     {
-        private object _key;
+        private readonly object _key;
 
         /// <summary>
-        /// O construtor padrao.
-        /// </summary>
-        protected EntityBase() : this(null) { }
+        /// Construtor padrao.
+        /// </summary>        
+        protected EntityBase() : this(null)
+        {
+            
+        }
 
         /// <summary>
         /// Overload do construtor.
@@ -22,7 +27,7 @@ namespace TODOSoft.ALugar.Infrastructure.DomainBase
         /// representa o identificador primário da classe.</param>
         protected EntityBase(object key)
         {
-            this._key = key;
+            this._key = key ?? EntityBase.NewKey();
         }
 
         /// <summary>
@@ -61,19 +66,20 @@ namespace TODOSoft.ALugar.Infrastructure.DomainBase
         /// <param name="base2">A segunda instância de <see cref="EntityBase"/>.</param>
         /// <returns></returns>
         public static bool operator == (EntityBase base1, EntityBase base2)
-        {
-            // Se os dois objetos são nulos, são iguais.
-            if (base1 as object == null && base2 as object == null)
+        {            
+            // check for both null (cast to object or recursive loop)
+            if ((object)base1 == null && (object)base2 == null)
             {
                 return true;
             }
 
-            if (base1 as object == null || base2 as object == null)
+            // check for either of them == to null
+            if ((object)base1 == null || (object)base2 == null)
             {
                 return false;
             }
 
-            return base1.Key == base2.Key;
+            return base1.Key.Equals(base2.Key);
         }
 
         /// <summary>
@@ -97,5 +103,10 @@ namespace TODOSoft.ALugar.Infrastructure.DomainBase
         }
 
         #endregion
+
+        public static object NewKey()
+        {
+            return Guid.NewGuid();
+        }
     }
 }

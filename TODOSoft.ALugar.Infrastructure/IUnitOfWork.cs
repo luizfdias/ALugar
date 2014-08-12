@@ -1,9 +1,4 @@
 ﻿using SmartCA.Infrastructure.RepositoryFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TODOSoft.ALugar.Infrastructure.DomainBase;
 
 namespace SmartCA.Infrastructure
