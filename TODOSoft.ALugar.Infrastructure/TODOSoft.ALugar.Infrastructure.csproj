@@ -51,6 +51,7 @@
     <Compile Include="RepositoryFramework\IRepository.cs" />
     <Compile Include="RepositoryFramework\IUnitOfWorkRepository.cs" />
     <Compile Include="RepositoryFramework\RepositoryBase.cs" />
+    <Compile Include="RepositoryFramework\RepositoryFactory.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

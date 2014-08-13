@@ -9,7 +9,7 @@ namespace SmartCA.Infrastructure.RepositoryFramework
 {
     public static class RepositoryFactory
     {
-        private static readonly Dictionary<string, object> repositories = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> _repositories = new Dictionary<string, object>();
 
         /// <summary> 
         /// Gets or creates an instance of the requested interface. Once a
@@ -29,7 +29,7 @@ namespace SmartCA.Infrastructure.RepositoryFramework
             string interfaceShortName = typeof(TRepository).Name;
 
             // See if the provider was already created and is in the cache
-            if (!repositories.ContainsKey(interfaceShortName))
+            if (!_repositories.ContainsKey(interfaceShortName))
             {
                 // Not there, so create it
 
@@ -40,12 +40,12 @@ namespace SmartCA.Infrastructure.RepositoryFramework
                 repository = Activator.CreateInstance(Type.GetType(settings.RepositoryMappings[interfaceShortName].RepositoryFullTypeName)) as TRepository;
 
                 // Add the new provider instance to the cache
-                repositories.Add(interfaceShortName, repository);
+                _repositories.Add(interfaceShortName, repository);
             }
             else
             {
                 // The provider was in the cache, so retrieve it
-                repository = (TRepository)repositories[interfaceShortName];
+                repository = (TRepository)_repositories[interfaceShortName];
             }
 
             return repository;
